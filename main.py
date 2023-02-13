@@ -16,12 +16,12 @@ if __name__ == '__main__':
             break
 
         # YOUR CODE FOR PROCESSING FRAME HERE
-        # cv2.imshow('frame', frame)
+        cv2.imshow('frame', frame)
         if cv2.waitKey(1) == ord('q'):
             break
 
         try:
             sb.send_frame(frame)
         except Exception as e:
-            pass
+            print(e)
 

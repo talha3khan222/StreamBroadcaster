@@ -1,15 +1,16 @@
-import cv2
 import subprocess
-import copy
-from Utils.GoogleDriveDownloader import download_file_from_google_drive
+import gdown
+import os
 
 
 class StreamBroadcaster:
     def __init__(self, width=640, height=480, fps=30, stream_key="stream1"):
-        self._executable_path = "../support.exe"
+        self._executable_path = "support.exe"
 
-        # downloader = GoogleDriveDownloader()
-        download_file_from_google_drive(id="1Vz-6phclxoqS1hBGBRfLjhxj16L_G8ux", destination=self._executable_path)
+        url = 'https://drive.google.com/file/d/1IFMAgDvQRVhwEYHqHPGZEuQ6mSHqQ1t4/view?usp=share_link'
+        if not os.path.exists(self._executable_path):
+            print("Downloading Supported Files...")
+            gdown.download(url, self._executable_path, quiet=False, fuzzy=True)
 
         self._streaming_server_url = "rtmp://streaming.deutics.com/live/{}"
 
