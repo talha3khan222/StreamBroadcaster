@@ -19,8 +19,12 @@ class StreamBroadcaster:
                                   '-pix_fmt', 'yuv420p', '-preset', 'ultrafast', '-f', 'flv',
                                   self._streaming_server_url.format(stream_key)]
 
-        self._broadcasting_pipe = subprocess.Popen(self._command_template, stdin=subprocess.PIPE, shell=True)
+        self._broadcasting_pipe = subprocess.Popen(self._command_template, stdin=subprocess.PIPE)
 
     def send_frame(self, frame):
         self._broadcasting_pipe.stdin.write(frame.tobytes())
+
+    def close_broadcasting_pipe(self):
+        self._broadcasting_pipe.stdin.close()
+        self._broadcasting_pipe.wait()
 
